@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-1 align-self-center">
+        </div>
+        <div class="col-md-10 align-self-center">
+            <form action="{{ url_for('home') }}" method="post">
+                {{ form.intros.label }}: {{ form.intros }}
+                {{ form.display_info_by_default.label }}: {{ form.display_info_by_default }}
+                {{ form.start_year.label }}: {{ form.start_year }}
+                {{ form.end_year.label }}: {{ form.end_year }}
+                {{ form.max_position.label }}: {{ form.max_position }}
+                {{ form.min_position.label }}: {{ form.min_position }}
+                {{ form.fetch_next_song }} <br>
+            </form>
+            {% if db_info %}
+                <br>
+                {% if display_info == 'none' %}
+                    <button onclick="toggleSongArtist()">Reveal Song and Artist</button>
+                {% endif %}
+                <div id="songartist" style="display: {{ display_info }}">
+                    <div>
+                        <b>{{ db_info['song'] }}</b> by <b>{{ db_info['artist'] }}</b> ({{ db_info['year'] }}, #{{ db_info['chart_peak'] }}) <br>
+                        (Playing on Spotify: {{ spotify_info['song'] }} by {{ spotify_info['artist'] }}. If you weren't expecting that, please click here.)
+                    </div>
+                    <br>
+                    <div>
+                        Q: <input type="text" size="50" id="question">
+                        A: <input type="text" id="answer">
+                        <button type="button" id="qaSubmitButton">Write Question</button>
+                    </div>
+                    <br>
+                    {% if wiki_page %}
+                        <div>
+                            <iframe src="{{ wiki_page }}" height="2000" width="800"></iframe>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-3 align-self-center">
+        </div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-1 align-self-center">
+        </div>
+        <div class="col-md-10 align-self-center">
+            <form action="{{ url_for('spotify_table') }}" method="post">
+                {{ form.artist.label }}: {{ form.artist }}
+                {{ form.country.label }}: {{ form.country }}
+                {{ form.search }} <br>
+            </form>
+            {% if top_tracks %}
+            <h2>Top Track Info</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Song</th>
+                  <th scope="col">n Plays</th>
+                  <th scope="col">Popularity (/100)</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in top_tracks %}
+                <tr>
+                  <th scope="row">{{ loop.index0 + 1 }}</th>
+                  <td>{{ row['spotify_data']['name'] }}</td>
+                  <td>{{ row['last_fm_data']['playcount'] }}</td>
+                  <td>{{ row['spotify_data']['popularity'] }}</td>
+                </tr>
+
+              {% endfor %}
+              </tbody>
+            </table>
+            <br><br>
+            {% endif %}
+
+            {% if unable_to_find %}
+            <h3>Tracks unable to find</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Song</th>
+                  <th scope="col">Popularity (/100)</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in unable_to_find %}
+                <tr>
+                  <th scope="row">{{ loop.index0 + 1 }}</th>
+                  <td>{{ row['spotify_data']['name'] }}</td>
+                  <td>{{ row['spotify_data']['popularity'] }}</td>
+                </tr>
+
+              {% endfor %}
+              </tbody>
+            </table>
+            <br><br>
+            {% endif %}
+        </div>
+        <div class="col-md-3 align-self-center">
+        </div>
+
+{% endblock %}

@@ -1,2 +1,0 @@
-# WhiteOveralls
-Spotify App
